@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -23,27 +24,22 @@ public class SchedulerService {
 
 
     private static final Logger log = LoggerFactory.getLogger((SchedulerService.class));
-
     ProgramRepository<Program> repository = new ReactiveProgramRepository();
 
 
-
     //TODO: deben retornar un flux de programDate Flux<ProgramDate>
-    public Flux<Program> generateCalendar(String programId, LocalDate startDate) {
+    public Flux<ProgramDate> generateCalendar(String programId, LocalDate startDate) {
         var endDate = new AtomicReference<>(LocalDate.from(startDate));
         final AtomicInteger[] pivot = {new AtomicInteger()};
         final int[] index = {0};
 
         //TODO: debe pasarlo a reactivo, no puede trabaja elementos bloqueantes
         //TODO: trabajar el map reactivo y no deben colectar
-        Flux<Program> program = repository.findbyId(programId);
-        program.collectList().subscribe(p->log.info(p.toString()));
-        return program;
-        /*Optional.ofNullable(program)
-                .map(this::getDurationOf)
-                .orElseThrow(() -> new RuntimeException("El programa academnico no existe"))
-                .map(toProgramDate(startDate, endDate, pivot[0], index))
-                .collect(Collectors.toList());*/
+        var program = repository.findbyId(programId);
+
+        return program.map(this::getDurationOf)
+                .map(element -> element.toString())
+                .map(toProgramDate(startDate, endDate, pivot[0], index));
     }
 
     //No tocar
