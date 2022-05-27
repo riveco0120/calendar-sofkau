@@ -5,6 +5,8 @@ import co.com.sofka.calendar.model.ProgramDate;
 import co.com.sofka.calendar.repositories.ProgramRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,7 +33,8 @@ public class SchedulerService {
 
         //TODO: debe pasarlo a reactivo, no puede trabaja elementos bloqueantes
         //TODO: trabajar el map reactivo y no deben colectar
-        var program = programRepository.findById(programId).block();
+        //Mono<Program> program = Mono.just(programRepository.findById(programId));
+        var program = programRepository.findById(programId);
         return Optional.ofNullable(program)
                 .map(this::getDurationOf)
                 .orElseThrow(() -> new RuntimeException("El programa academnico no existe"))

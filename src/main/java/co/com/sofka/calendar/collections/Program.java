@@ -7,6 +7,17 @@ import java.util.List;
 
 @Document
 public class Program {
+
+    public static final Program DDD = new Program("2526", "Training No Bilingue",
+            List.of(new CourseTime("005", "Domain Driven Design",List.of(new Time("01", 15, "Desarrollo",
+                    List.of("http://www.domain.com.co"))))));
+    public static final Program REACTIVA = new Program("2526", "Training No Bilingue",
+            List.of(new CourseTime("008", "Programacion Reactiva",List.of(new Time("01", 8, "Desarrollo",
+                    List.of("http://www.reactiva.com.co"))))));
+    public static final Program PRUEBAS_UNI = new Program("2526", "Training No Bilingue",
+            List.of(new CourseTime("010", "Pruebas Unitarias",List.of(new Time("01", 8, "Desarrollo",
+                    List.of("http://www.unitarias.com.co"))))));
+
     @Id
     private String id;
     private String name;
