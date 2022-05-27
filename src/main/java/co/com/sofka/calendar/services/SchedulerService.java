@@ -38,7 +38,7 @@ public class SchedulerService {
         var program = repository.findbyId(programId);
 
         return program.map(this::getDurationOf)
-                .map(element -> element.toString())
+                 .map(element -> element.toString())
                 .map(toProgramDate(startDate, endDate, pivot[0], index));
     }
 

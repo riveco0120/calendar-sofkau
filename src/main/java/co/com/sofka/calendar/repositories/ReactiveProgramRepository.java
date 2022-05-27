@@ -26,7 +26,7 @@ public class ReactiveProgramRepository implements ProgramRepository<Program> {
         Program program = programs.stream()
                 .filter(item->item.getId().equals(id))
                 .findFirst().orElseThrow(
-                        ()->new IllegalArgumentException("El programa academnico no existe"));
+                        ()->new RuntimeException("El programa academnico no existe"));
         return Flux.just(program);
     }
 }
