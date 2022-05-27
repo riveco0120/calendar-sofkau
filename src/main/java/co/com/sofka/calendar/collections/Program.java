@@ -56,4 +56,13 @@ public class Program {
     public void setCourses(List<CourseTime> courses) {
         this.courses = courses;
     }
+
+    @Override
+    public String toString() {
+        return "Program{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", courses=" + courses +
+                '}';
+    }
 }
