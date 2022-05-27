@@ -1,8 +1,11 @@
 package co.com.sofka.calendar.services;
 
+import co.com.sofka.calendar.CalendarApplication;
 import co.com.sofka.calendar.collections.Program;
 import co.com.sofka.calendar.model.ProgramDate;
 import co.com.sofka.calendar.repositories.ProgramRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -22,6 +25,11 @@ import java.util.stream.Stream;
 @Service
 public class SchedulerService {
 
+    private static final Logger log = LoggerFactory.getLogger((SchedulerService.class));
+
+    public void fluxPrueba(){
+        Flux.just(Program.DDD).subscribe(p -> log.info(p.toString()));
+    }
     @Autowired
     private ProgramRepository programRepository;
 
@@ -35,11 +43,11 @@ public class SchedulerService {
         //TODO: trabajar el map reactivo y no deben colectar
         //Mono<Program> program = Mono.just(programRepository.findById(programId));
         var program = programRepository.findById(programId);
-        return Optional.ofNullable(program)
+        return null;/*Optional.ofNullable(program)
                 .map(this::getDurationOf)
                 .orElseThrow(() -> new RuntimeException("El programa academnico no existe"))
                 .map(toProgramDate(startDate, endDate, pivot[0], index))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
     }
 
     //No tocar

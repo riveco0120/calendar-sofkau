@@ -41,4 +41,13 @@ public class CourseTime {
     public void setCategories(List<Time> categories) {
         this.categories = categories;
     }
+
+    @Override
+    public String toString() {
+        return "CourseTime{" +
+                "courseId='" + courseId + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", categories=" + categories +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package co.com.sofka.calendar;
 
+import co.com.sofka.calendar.services.SchedulerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -16,6 +17,7 @@ public class CalendarApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+        SchedulerService prueba = new SchedulerService();
+        prueba.fluxPrueba();
     }
 }

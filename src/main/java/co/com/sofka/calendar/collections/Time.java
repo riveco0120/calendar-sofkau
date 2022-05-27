@@ -51,4 +51,14 @@ public class Time {
     public void setUrlsRefGradles(List<String> urlsRefGradles) {
         this.urlsRefGradles = urlsRefGradles;
     }
+
+    @Override
+    public String toString() {
+        return "Time{" +
+                "categoryId='" + categoryId + '\'' +
+                ", days=" + days +
+                ", categoryName='" + categoryName + '\'' +
+                ", urlsRefGradles=" + urlsRefGradles +
+                '}';
+    }
 }
