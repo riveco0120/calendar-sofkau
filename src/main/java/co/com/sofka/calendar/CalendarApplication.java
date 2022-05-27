@@ -7,6 +7,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @SpringBootApplication
 public class CalendarApplication implements CommandLineRunner {
 
@@ -18,6 +21,7 @@ public class CalendarApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         SchedulerService prueba = new SchedulerService();
-        prueba.fluxPrueba();
+        //prueba.fluxPrueba();
+        prueba.generateCalendar("2526", LocalDate.parse("2022-05-27"));
     }
 }

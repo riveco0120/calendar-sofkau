@@ -1,6 +1,5 @@
 package co.com.sofka.calendar.services;
 
-import co.com.sofka.calendar.CalendarApplication;
 import co.com.sofka.calendar.collections.Program;
 import co.com.sofka.calendar.model.ProgramDate;
 import co.com.sofka.calendar.repositories.ProgramRepository;
@@ -25,25 +24,28 @@ import java.util.stream.Stream;
 @Service
 public class SchedulerService {
 
-    private static final Logger log = LoggerFactory.getLogger((SchedulerService.class));
 
+    private static final Logger log = LoggerFactory.getLogger((SchedulerService.class));
     public void fluxPrueba(){
         Flux.just(Program.DDD).subscribe(p -> log.info(p.toString()));
     }
     @Autowired
     private ProgramRepository programRepository;
 
+
+
     //TODO: deben retornar un flux de programDate Flux<ProgramDate>
-    public Flux<ProgramDate> generateCalendar(String programId, LocalDate startDate) {
+    public Flux<Program> generateCalendar(String programId, LocalDate startDate) {
         var endDate = new AtomicReference<>(LocalDate.from(startDate));
         final AtomicInteger[] pivot = {new AtomicInteger()};
         final int[] index = {0};
 
         //TODO: debe pasarlo a reactivo, no puede trabaja elementos bloqueantes
         //TODO: trabajar el map reactivo y no deben colectar
-        //Mono<Program> program = Mono.just(programRepository.findById(programId));
-        var program = programRepository.findById(programId);
-        return null;/*Optional.ofNullable(program)
+        Flux<Program> program = Flux.just(Program.DDD,Program.PRUEBAS_UNI,Program.REACTIVA);
+        program.collectList().subscribe(p->log.info(p.toString()));
+        return program;
+        /*Optional.ofNullable(program)
                 .map(this::getDurationOf)
                 .orElseThrow(() -> new RuntimeException("El programa academnico no existe"))
                 .map(toProgramDate(startDate, endDate, pivot[0], index))
