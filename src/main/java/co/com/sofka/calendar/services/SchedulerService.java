@@ -3,20 +3,17 @@ package co.com.sofka.calendar.services;
 import co.com.sofka.calendar.collections.Program;
 import co.com.sofka.calendar.model.ProgramDate;
 import co.com.sofka.calendar.repositories.ProgramRepository;
+import co.com.sofka.calendar.repositories.ReactiveProgramRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -26,11 +23,8 @@ public class SchedulerService {
 
 
     private static final Logger log = LoggerFactory.getLogger((SchedulerService.class));
-    public void fluxPrueba(){
-        Flux.just(Program.DDD).subscribe(p -> log.info(p.toString()));
-    }
-    @Autowired
-    private ProgramRepository programRepository;
+
+    ProgramRepository<Program> repository = new ReactiveProgramRepository();
 
 
 
@@ -42,7 +36,7 @@ public class SchedulerService {
 
         //TODO: debe pasarlo a reactivo, no puede trabaja elementos bloqueantes
         //TODO: trabajar el map reactivo y no deben colectar
-        Flux<Program> program = Flux.just(Program.DDD,Program.PRUEBAS_UNI,Program.REACTIVA);
+        Flux<Program> program = repository.findbyId(programId);
         program.collectList().subscribe(p->log.info(p.toString()));
         return program;
         /*Optional.ofNullable(program)
